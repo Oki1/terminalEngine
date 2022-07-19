@@ -24,7 +24,9 @@ int main() {
 
 	projection = glm::perspective(glm::radians(75.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
+	//IMPLEMENT FRUSTUM CULLING
 
+	
 
 
 	for(int x = 0; x < cubeVertices.size(); x++) {
