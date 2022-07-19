@@ -10,3 +10,4 @@ build/
 *.dir/
 *.vcxproj
 *.vcxproj.filters
+**/CMakeCache.txt
