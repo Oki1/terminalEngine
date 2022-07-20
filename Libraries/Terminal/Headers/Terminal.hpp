@@ -14,4 +14,11 @@ public:
 	void PutPixel(char, short, short);
 	void ClearBuffer(char = '#');
 	void DrawFrame();
+
+	//rasterization
+private:
+    void plotLineHigh(int x0, int y0, int x1, int y1, char c);
+    void plotLineLow(int x0, int y0, int x1, int y1, char c);
+public:
+    void drawLine(int x0, int y0, int x1, int y1, char c);
 };

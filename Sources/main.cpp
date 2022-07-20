@@ -1,5 +1,4 @@
 #include <Terminal.hpp>
-#include <Rasterizer.hpp>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -81,6 +80,6 @@ int main() {
 	}
 
 	t.ClearBuffer();
-    Rasterizer::drawLine(t, 0, 0, 10, 20, '@');
+    t.drawLine(0, 0, 10, 20, '@');
     t.DrawFrame();
 }
