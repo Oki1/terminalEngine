@@ -3,4 +3,5 @@ add_library(
     Terminal.cpp
     Headers/Terminal.hpp
 )
+target_link_libraries (Terminal PUBLIC glm)
 target_include_directories(Terminal PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Headers")

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <glm/glm.hpp>
 class Terminal {
 private:
 	CONSOLE_FONT_INFOEX font;
@@ -17,9 +18,10 @@ public:
 
 	//rasterization
 private:
-    void plotLineHigh(int x0, int y0, int x1, int y1, char c);
-    void plotLineLow(int x0, int y0, int x1, int y1, char c);
+    void plotLineHigh(glm::i8vec2 a, glm::i8vec2 b, char c);
+    void plotLineLow(glm::i8vec2 a, glm::i8vec2 b, char c);
+	int crossProduct(glm::i8vec2 a, glm::i8vec2 b);
 public:
-    void drawLine(int x0, int y0, int x1, int y1, char c);
-	void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2 ,char c, bool fill = false);
+    void drawLine(glm::i8vec2 a, glm::i8vec2 b, char chr);
+	void drawTriangle(glm::i8vec2 a, glm::i8vec2 b, glm::i8vec2 c,char chr, bool fill = false);
 };

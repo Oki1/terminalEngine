@@ -1,3 +1,6 @@
+#include <cstdlib>
+#include <algorithm>
+
 #include "Headers/Terminal.hpp"
 Terminal::Terminal() {
     //handle to the console
@@ -37,81 +40,85 @@ void Terminal::DrawFrame() {
 	SetConsoleCursorPosition(handle, {0,0});
 }
 //Rasterizer
-#include <cstdlib>
 
-
-void Terminal::plotLineHigh(int x0, int y0, int x1, int y1, char c) {
-    int dx = x1 - x0;
-    int dy = y1 - y0;
+void Terminal::plotLineHigh(glm::i8vec2 a, glm::i8vec2 b, char c) {
+    glm::i8vec2 d = b - a;
     int  xi = 1;
-    if (dx < 0) {
+    if (d.x < 0) {
         xi = -1;
-        dx = -dx;
+        d.x = -d.x;
     }
-    int D = (2 * dx) - dy;
-    int x = x0;
+    int D = (2 * d.x) - d.y;
+    int x = a.x;
 
-    for(int y = y0; y < y1; y++) {
+    for(int y = a.y; y < b.y; y++) {
         PutPixel(c, x, y);
         if (D > 0) {
             x = x + xi;
-            D = D + (2 * (dx - dy));
+            D = D + (2 * (d.x - d.y));
         }
         else {
-            D = D + 2*dx;
+            D = D + 2*d.x;
         }
     }
 }
-void Terminal::plotLineLow(int x0, int y0, int x1, int y1, char c)
+void Terminal::plotLineLow(glm::i8vec2 a, glm::i8vec2 b, char c)
 {
-    int dx = x1 - x0;
-    int dy = y1 - y0;
-    int  yi = 1;
-    if (dy < 0) {
+	glm::i8vec2 d = b-a;
+    int yi = 1;
+    if (d.y < 0) {
         yi = -1;
-        dy = -dy;
+        d.y = -d.y;
     }
-    int D = (2 * dy) - dx;
-    int y = y0;
+    int D = (2 * d.y) - d.x;
+    int y = a.y;
 
-    for(int x = x0; x < x1; x++) {
+    for(int x = a.x; x < b.x; x++) {
         PutPixel(c, x, y);
         if (D > 0) {
             y = y + yi;
-            D = D + (2 * (dy - dx));
+            D = D + (2 * (d.y - d.x));
         }
         else {
-            D = D + 2*dy;
+            D = D + 2*d.y;
         }
     }
 }
 
-void Terminal::drawLine(int x0, int y0, int x1, int y1, char c) {
-    if (abs(y1 - y0) < abs(x1 - x0)) {
-        if (x0 > x1) {
-            plotLineLow(x1, y1, x0, y0, c);
+void Terminal::drawLine(glm::i8vec2 a, glm::i8vec2 b, char c) {
+    if (abs(b.y - a.y) < abs(b.x - a.x)) {
+        if (a.x > b.x) {
+            plotLineLow(b, a, c);
         }
         else {
-            plotLineLow(x0, y0, x1, y1, c);
+            plotLineLow(a, b, c);
 
         }
-    } else {
-        if (y0 > y1) {
-            plotLineHigh (x1, y1, x0, y0, c);
+    }
+    else{
+        if (a.y > b.y) {
+            plotLineHigh (b, a, c);
 
         } else {
-            plotLineHigh (x0, y0, x1, y1, c);
+            plotLineHigh (a, b, c);
         }
 
     }
 }
 
-void Terminal::drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2 ,char c, bool fill) {
-	if (!fill) {
-		drawLine(x0, y0, x1, y1, c);
-		drawLine(x1, y1, x2, y2, c);
-		drawLine(x0, y0, x2, y2, c);
-	} else {
-		std::cerr << "NOT IMPLEMENTED YET" << std::endl;
+void Terminal::drawTriangle(glm::i8vec2 a, glm::i8vec2 b, glm::i8vec2 c, char chr, bool fill) {
+	if(a.y < b.y) {
+		std::swap(a,b);
+	}
+	if(a.y < c.y) {
+		std::swap(a,c);
+	}
+	if(b.y < c.y) {
+		std::swap(b,c);
+	}
+	if(!fill) {
+		drawLine(a, b, chr);
+		drawLine(b, c, chr);
+		drawLine(c, a, chr);
 	}
 }
