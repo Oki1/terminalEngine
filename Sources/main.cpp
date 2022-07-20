@@ -79,7 +79,8 @@ int main() {
 		cubeVertices[x] = glm::vec4(projection*view*model*cubeVertices[x]);
 	}
 
-	t.ClearBuffer();
+	t.ClearBuffer(' ');
     t.drawLine(0, 0, 10, 20, '@');
+    t.drawTriangle(10, 10, 30, 15, 20, 45, '#');
     t.DrawFrame();
 }

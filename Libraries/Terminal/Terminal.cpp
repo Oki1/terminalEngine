@@ -95,8 +95,7 @@ void Terminal::drawLine(int x0, int y0, int x1, int y1, char c) {
             plotLineLow(x0, y0, x1, y1, c);
 
         }
-    }
-    else{
+    } else {
         if (y0 > y1) {
             plotLineHigh (x1, y1, x0, y0, c);
 
@@ -105,4 +104,14 @@ void Terminal::drawLine(int x0, int y0, int x1, int y1, char c) {
         }
 
     }
+}
+
+void Terminal::drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2 ,char c, bool fill) {
+	if (!fill) {
+		drawLine(x0, y0, x1, y1, c);
+		drawLine(x1, y1, x2, y2, c);
+		drawLine(x0, y0, x2, y2, c);
+	} else {
+		std::cerr << "NOT IMPLEMENTED YET" << std::endl;
+	}
 }

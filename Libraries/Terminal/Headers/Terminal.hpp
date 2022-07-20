@@ -21,4 +21,5 @@ private:
     void plotLineLow(int x0, int y0, int x1, int y1, char c);
 public:
     void drawLine(int x0, int y0, int x1, int y1, char c);
+	void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2 ,char c, bool fill = false);
 };
