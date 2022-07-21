@@ -1,4 +1,5 @@
 #include <Terminal.hpp>
+#include <Rasterizer.hpp>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -80,5 +81,7 @@ int main() {
 	}
 
 	t.ClearBuffer(' ');
+    //rast::DrawLine(t, {5, 5}, {30, 30}, '@');
+    rast::DrawTriangle(t, {10, 10}, {35, 30}, {25, 18}, false);
     t.DrawFrame();
 }
