@@ -15,6 +15,4 @@ public:
 	void PutPixel(char, short, short);
 	void ClearBuffer(char = '#');
 	void DrawFrame();
-
-
 };

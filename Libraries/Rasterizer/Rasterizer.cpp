@@ -12,26 +12,41 @@ rast::vec2::vec2(int a, int b) {
 	x = a;
 	y = b;
 }
-/*rast::vec2::vec2(){
+rast::vec2::vec2(){
     x = 0;
     y = 0;
-};*/
+};
 
-int min(int a, int b) {
-    if(a < b) {
-        return a;
+int min(int a, int b, int c) {
+    int ret = a;
+    if(b < ret) {
+        ret = b;
     }
-    return b;
+    if(c < ret) {
+        ret = c;
+    }
+    return ret;
 }
-int max(int a, int b) {
-    if(a > b) {
-        return a;
+int max(int a, int b, int c) {
+    int ret = a;
+    if(b > ret) {
+        ret = b;
     }
-    return b;
+    if(c > ret) {
+        ret = c;
+    }
+    return ret;
 }
 
-int crossProduct(rast::vec2 q, rast::vec2 r, rast::vec2 s, rast::vec2 t) {
-	return((r.x - q.x) * (t.y - s.y) - (t.x - s.x) * (r.y - q.y));
+int crossProductSign(rast::vec2 q, rast::vec2 r, rast::vec2 s, rast::vec2 t) {
+    int cross = (r.x - q.x) * (t.y - s.y) - (t.x - s.x) * (r.y - q.y);
+    if(cross == 0) {
+        return 0;
+    }
+    else if(cross > 0) {
+        return 1;
+    }
+    return -1;
 }
 
 void plotLineHigh(Terminal& t, rast::vec2 a, rast::vec2 b, char c) {
@@ -111,5 +126,26 @@ void rast::DrawTriangle(Terminal& t, vec2 a, vec2 b, vec2 c, char chr, bool fill
 		DrawLine(t, a, b, chr);
 		DrawLine(t, b, c, chr);
 		DrawLine(t, c, a, chr);
-	}
+	} else {
+        //"walk around" method
+        
+        vec2 maxP(max(a.x,b.x,c.x), a.y);
+        vec2 minP(min(a.x, b.x, c.x), c.y);
+        //std::cout << maxP.x << " " << maxP.y << " " << minP.x <<" " << minP.y << std::endl;
+        vec2 p = minP;
+
+        for(;p.y <= maxP.y; p.y++) {
+            for(p.x = minP.x;p.x <= maxP.x; p.x++) {
+                //t.PutPixel(chr, p.x, p.y);
+                
+                int cross1 = crossProductSign(c,b,c,p);
+                int cross2 = crossProductSign(p,a,b,p);
+                int cross3 = crossProductSign(a,c,a,p);
+                if((cross1 == cross2 || cross1 == 0 || cross2 == 0) && (cross2 == cross3 || cross2 == 0 || cross3 == 0)) {
+                    t.PutPixel(chr, p.x, p.y);
+                }
+            }
+        }
+
+    }
 }

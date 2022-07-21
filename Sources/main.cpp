@@ -82,6 +82,8 @@ int main() {
 
 	t.ClearBuffer(' ');
     //rast::DrawLine(t, {5, 5}, {30, 30}, '@');
-    rast::DrawTriangle(t, {10, 10}, {35, 30}, {25, 18}, false);
+    rast::DrawTriangle(t, {5,30}, {5,5}, {30,5},'#');
+    rast::DrawTriangle(t, {5,30}, {30,5}, {30,30},'@');
     t.DrawFrame();
+    getc(stdin);
 }
