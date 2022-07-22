@@ -1,18 +1,31 @@
 #pragma once
-#include <iostream>
-#include <windows.h>
-#undef min //make c++ daddy happy and use std::max
-#undef max
+#ifdef _WIN32
 class Terminal {
 private:
-	CONSOLE_FONT_INFOEX font;
 	char* buffer;
-	HANDLE handle;
+	void* handle;
 	int bufferSize;
 public:
-	COORD screenSize;
+	int screenWidth;
+	int screenHeight;
 	Terminal(); //class constructor
 	void PutPixel(char, short, short);
 	void ClearBuffer(char = '#');
 	void DrawFrame();
 };
+#elif __linux__
+class Terminal {
+private:
+	wchar_t* buffer;
+	void* handle;
+	int bufferSize;
+public:
+	int screenWidth;
+	int screenHeight;
+	Terminal(); //class constructor
+	void PutPixel(char, short, short);
+	void ClearBuffer(char = '#');
+	void DrawFrame();
+};
+#else
+#endif
