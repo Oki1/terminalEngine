@@ -1,5 +1,6 @@
 #include "Headers/Rasterizer.hpp"
 #include <cstdlib>
+#include <algorithm>
 rast::vec2 rast::vec2::operator-(vec2 a) {
 	vec2 ret(x-a.x, y-a.y);
 	return ret;
