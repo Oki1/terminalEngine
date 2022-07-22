@@ -3,8 +3,12 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <string>
+#include <io.h>
+#include <fcntl.h>
 typedef unsigned int uint;
 int main() {
+    
 	Terminal t = Terminal();
 	const static std::vector<float> vertices =
     {
@@ -73,17 +77,28 @@ int main() {
     view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	view *= glm::lookAt(cameraPosition, glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 projection = glm::perspective(glm::radians(75.0f), (float)((float)t.screenSize.X)/((float)t.screenSize.Y), 0.01f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(75.0f), (float)((float)t.screenWidth)/((float)t.screenHeight), 0.01f, 100.0f);
 
 
 	for(int x = 0; x < cubeVertices.size(); x++) {
 		cubeVertices[x] = glm::vec4(projection*view*model*cubeVertices[x]);
 	}
 
-	t.ClearBuffer(' ');
-    //rast::DrawLine(t, {5, 5}, {30, 30}, '@');
-    rast::DrawTriangle(t, {5,30}, {5,5}, {30,5},'#');
-    rast::DrawTriangle(t, {5,30}, {30,5}, {30,30},'@');
+    //std::cout << cubeVertices[3].x << " " << cubeVertices[3].y << " "<<cubeVertices[3].z << " "<<cubeVertices[3].w << std::endl;
+
+    t.ClearBuffer('.');
+    //rast::DrawTriangle(t, {2,3}, {50, 35}, {21, 60}, '@');
     t.DrawFrame();
-    getc(stdin);
+
+    /*std::string characters = "@{#$%&MOWX+*";
+    t.ClearBuffer();
+	for(int x = 0; x < indices.size(); x+=3) {
+        indices.
+    }*/
+    //SetConsoleOutputCP( CP_UTF8 );
+    //std::cout << u8"Ｕ" << std::endl;
+    //std::wstring p("＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＵ");
+    /*Terminal t = Terminal();
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    std::wcout << L"\xff10\xff30\xff11\n\xff21\xff31\xff32\n\xff22\xff34\xff15" << std::endl;*/
 }
