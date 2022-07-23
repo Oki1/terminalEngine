@@ -81,11 +81,9 @@ int main() {
 	for(int x = 0; x < cubeVertices.size(); x++) {
 		cubeVertices[x] = glm::vec4(projection*view*model*cubeVertices[x]);
 	}
-
-	t.ClearBuffer(' ');
-    //rast::DrawLine(t, {5, 5}, {30, 30}, '@');
-    rast::DrawTriangle(t, {5,10}, {5,5}, {10,5},'#');
-    rast::DrawTriangle(t, {5,10}, {10,10}, {10,5},'@');
-    t.DrawFrame();
+    for(auto x : cubeVertices) {
+        std::cout <<x.x<< " " << x.y<< " " << x.z<< " " << x.w << std::endl;
+    }
+    
     getc(stdin);
 }
