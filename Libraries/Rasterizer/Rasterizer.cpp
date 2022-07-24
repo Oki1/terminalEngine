@@ -1,6 +1,7 @@
 #include "Headers/Rasterizer.hpp"
 #include <cstdlib>
 #include <algorithm>
+#include <cmath>
 rast::vec2 rast::vec2::operator-(vec2 a) {
 	vec2 ret(x-a.x, y-a.y);
 	return ret;
@@ -17,6 +18,27 @@ rast::vec2::vec2(){
     x = 0;
     y = 0;
 };
+
+rast::vec2f rast::vec2f::operator-(vec2f a) {
+	vec2f ret(x-a.x, y-a.y);
+	return ret;
+}
+rast::vec2f rast::vec2f::operator+(vec2f a) {
+	vec2f ret(x+a.x, y+a.y);
+	return ret;
+}
+rast::vec2f::vec2f(float a, float b) {
+	x = a;
+	y = b;
+}
+rast::vec2f::vec2f(){
+    x = 0;
+    y = 0;
+};
+
+rast::vec2 screenSpaceToCoordinates(rast::vec2f a, int width, int height) {
+    return(rast::vec2((int)round(a.x*(float)width), (int)round(a.x*(float)height)));
+}
 
 int min(int a, int b, int c) {
     int ret = a;
@@ -149,4 +171,18 @@ void rast::DrawTriangle(Terminal& t, vec2 a, vec2 b, vec2 c, char chr, bool fill
         }
 
     }
+}
+
+#include <iostream>
+void rast::DrawTriangleScreenCoordinates(Terminal& t, vec2f a, vec2f b, vec2f c, char chr) {
+    vec2 ar = screenSpaceToCoordinates(a, t.screenWidth, t.screenHeight);
+    vec2 br = screenSpaceToCoordinates(b, t.screenWidth, t.screenHeight);
+    vec2 cr = screenSpaceToCoordinates(c, t.screenWidth, t.screenHeight);
+    /*std::cout << ar.x << "\t"<< ar.y << std::endl;
+    std::cout << br.x << "\t"<<br.y << std::endl;
+    std::cout << cr.x << "\t" << cr.y << std::endl;
+    std::cout << "\n\n\n" << std::endl;*/
+    
+
+    DrawTriangle(t, ar, br, cr, chr);
 }

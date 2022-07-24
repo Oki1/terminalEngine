@@ -10,8 +10,17 @@ namespace rast {
 		vec2(); //default constructor
 		vec2(int a,int b);
 	};
-
-
-    void DrawLine(Terminal&, vec2, vec2, char chr);
-	void DrawTriangle(Terminal&, vec2, vec2, vec2,char chr, bool fill = true);
+	class vec2f {
+    public:
+		float x;
+		float y;
+		vec2f operator-(vec2f a);
+		vec2f operator+(vec2f a);
+		vec2f(); //default constructor
+		vec2f(float a,float b);
+	};
+	
+    void DrawLine(Terminal&, vec2, vec2, char);
+	void DrawTriangle(Terminal&, vec2, vec2, vec2,char, bool fill = true);
+	void DrawTriangleScreenCoordinates(Terminal&, vec2f, vec2f, vec2f, char);
 }

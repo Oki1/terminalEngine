@@ -1,6 +1,7 @@
 #include "Headers/Terminal.hpp"
 #include <iostream>
 #ifdef _WIN32
+#include <windows.h>
 Terminal::Terminal() {
     //handle to the console
 	handle = GetStdHandle(STD_OUTPUT_HANDLE);
